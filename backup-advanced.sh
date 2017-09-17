@@ -1,5 +1,9 @@
 #!/bin/bash
 
+##########
+# CONFIG #
+##########
+
 # MySQL login information
 mysql_username=""
 mysql_user_password=""
@@ -23,10 +27,14 @@ dir_for_backups=""
 #dir_to_be_backed_up="/home/user"
 dir_to_be_backed_up=""
 
+#########
+# LOGIC #
+#########
+
 # Create the backup directories if needed
-if [ ! -d ${dir_for_backups}         ]; then mkdir ${dir_for_backups};         fi
-if [ ! -d ${dir_for_backups}/monthly ]; then mkdir ${dir_for_backups}/monthly; fi
-if [ ! -d ${dir_for_backups}/cyclic  ]; then mkdir ${dir_for_backups}/cyclic;  fi
+[ ! -d ${dir_for_backups} ]         && mkdir ${dir_for_backups}
+[ ! -d ${dir_for_backups}/monthly ] && mkdir ${dir_for_backups}/monthly
+[ ! -d ${dir_for_backups}/cyclic ]  && mkdir ${dir_for_backups}/cyclic
 
 mysqldump       -u${mysql_username} -p${mysql_user_password} \
                 ${mysql_db_name} | gzip > \
@@ -46,13 +54,3 @@ mv              ${dir_for_backups}/${site_address}_files_$(date +%y%m%d).tbz \
 
 mv              ${dir_for_backups}/${site_address}_db_$(date +%y%m%d).sql.gz \
                 ${dir_for_backups}/cyclic/${site_address}_db_$(date +%a).sql.gz
-
-# TODO
-
-# idea by icelesstea
-# BEFORE: if [ ! -d ${dir_for_backups} ]; then mkdir ${dir_for_backups}; fi
-# AFTER:  [ ! -d ${dir_for_backups} ] && mkdir ${dir_for_backups}
-
-# idea by icelesstea
-# BEFORE: /bin/bash
-# AFTER:  /usr/bin/env
