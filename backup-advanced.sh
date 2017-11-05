@@ -24,7 +24,7 @@ dir_for_backups=""
 # The absolute location of the files of the site to be backed up without
 # the trailing slash. See the example below:
 
-#dir_to_be_backed_up="/home/user"
+#dir_to_be_backed_up="/home/user/public_html"
 dir_to_be_backed_up=""
 
 #########
